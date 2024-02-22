@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+</head>
+<body>
+<h2>list.html</h2>
+<table>
+    <tr>
+        <th>no</th>
+        <th>id</th>
+        <th>name</th>
+    </tr>
+    <tr th:each="list: ${list}">
+        <td th:text="${list.getNo()}"></td>
+        <td th:text="${list.getId()}"></td>
+        <td th:text="${list.getName()}"></td>
+    </tr>
+</table>
+</body>
+</html>
