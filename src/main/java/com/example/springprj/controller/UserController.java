@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,7 +27,24 @@ public class UserController {
 
         model.addAttribute("list", list);
 
-        return "user/user_list";
+        return "user/list";
+    }
+
+    @GetMapping("/user/insert")
+    public String getInsert(){
+
+        return "user/insert";
+    }
+
+
+
+
+    @PostMapping("/user/insert")
+    public void insertUser(User user, @RequestParam("postcode")String postcode, @RequestParam("address")String address, @RequestParam("detail") String detail){
+
+        user.setUser_addr(postcode, address, detail);
+        userService.insertUser(user);
+
     }
 
 

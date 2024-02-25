@@ -9,5 +9,6 @@ public interface UserService {
 
 
 
+    public void insertUser(User user);
     public List<User> userList();
 }

@@ -10,5 +10,10 @@ import java.util.List;
 @Repository
 @Mapper
 public interface UserMapper {
+
+    public void insertUser(User user);
     public List<User> userList();
+
+
+
 }

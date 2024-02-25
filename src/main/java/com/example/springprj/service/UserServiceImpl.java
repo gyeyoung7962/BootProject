@@ -19,8 +19,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> userList() {
+    public void insertUser(User user) {
 
+        userMapper.insertUser(user);
+    }
+
+    @Override
+    public List<User> userList() {
 
         return userMapper.userList();
     }

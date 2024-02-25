@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'Giants-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            font-family: 'Giants-Bold';
+            text-decoration: none;
+        }
+
+
+
+
+        #insert_box_patient, #insert_box_doctor, #login_box{
+            border-radius: 50px;
+            border:1px solid black;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            padding: 40px;
+            display: block;
+        }
+
+        #insert_choose_box{
+
+            border:1px solid black;
+            border-radius: 20px;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            width:100%;
+            display:block;
+        }
+
+        #insert_choose_box ul{
+
+            width:100%;
+            display: flex;
+            justify-content: center;
+            padding-left: 0;
+
+        }
+
+
+        #insert_choose_box ul li{
+            text-align: center;
+            margin: 20px;
+            display: inline;
+            width:50%;
+            height: 200px;
+            width:50%;
+
+        }
+
+        #insert_choose_box ul li a{
+            text-decoration: none;
+            color:white;
+            font-size: 2rem;
+            line-height: 200px;
+            width:50%;
+            transition: 1s;
+
+
+
+        }
+
+        #insert_choose_box ul li a:hover{
+            background: rgba(126, 115, 115, 0.466);
+        }
+
+        /*#login_box{*/
+
+        /*    padding: 150px;*/
+        /*    font-size: 1.1rem;*/
+        /*}*/
+    </style>
+</head>
+<body>
+
+<header class="bg-primary d-flex">
+    <p class="title">병원예약시스템</p>
+
+    <ul class="d-flex">
+        <li><a href="" style="color:white;">회원가입</a></li>
+        <li><a href="" style="color:white;">로그인</a></li>
+    </ul>
+</header>
+
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid row">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <a class="navbar-brand" href="#">병원매칭예약시스템</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                <div class="col-md-2"></div>
+
+                <div class="col-md-4">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">예약</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">게시판</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">병원목록</a>
+                        </li>
+                </div>
+
+                </ul>
+                <div class="col-md-2"></div>
+                <div class="collapse navbar-collapse d-flex"  id="navbarCollapse">
+                    <ul class="navbar-nav col-md-1 me-auto mb-2 mb-md-0 justify-content-center">
+                        <li><a href="" class="navbar-brand">회원가입</a></li>
+                        <li><a href="" class="navbar-brand" >로그인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container col-md-6" id="insert_box_patient">
+    <div class="input-form-backgroud row ">
+        <div class="input-form col-md-8 mx-auto">
+            <h4 class="mb-3">환자등록</h4>
+            <hr/>
+            <form class="validation-form" action="/user/insert" method="post" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="user_name">이름</label>
+                        <input type="text" class="form-control" name="user_name" id="user_name" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            이름을 입력해주세요.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="datePicker1">생년월일</label>
+                        <input type="text" id="datePicker1" class="form-control datePicker" name="user_birth"  />
+                        <div class="invalid-feedback">
+                            생년월일 입력해주세요.
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="user_id">아이디</label>
+                        <input type="text" class="form-control" name="user_id" id="user_id" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            아이디를 입력해주세요.
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="user_pw">비밀번호</label>
+                        <input type="password" class="form-control" name="user_pw" id="user_pw" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            비밀번호 입력해주세요
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="user_pwChk">비밀번호 확인</label>
+                        <input type="password" class="form-control" id="user_pwChk" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            비밀번호가 다릅니다
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-3">
+                        <label for="user_phone">연락처</label>
+                        <input type="text" class="form-control" name="user_phone" id="user_phone" placeholder="01012345678">
+
+                        <div class="invalid-feedback">
+                            연락처 입력해주세요
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <label for="postcode">주소</label>
+                    <div class="col-md-8 mb-3">
+                        <input type="text" id="postcode" name="postcode" class="form-control" placeholder="우편번호">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <input type="button" class="form-control" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 mb-3">
+                        <input type="text" class="form-control" name="address" id="address" placeholder="주소">
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <input type="text" class="form-control" name="detail" id="detail" placeholder="상세주소">
+                    </div>
+                </div>
+
+
+
+
+
+                <hr class="mb-4">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="aggrement" required>
+                    <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+                </div>
+                <div class="mb-4"></div>
+
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-success btn-lg btn-block m-3" type="submit">확인</button>
+                    <button class="btn btn-danger btn-lg btn-block m-3" type="reset">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    //date picker
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        showMonthAfterYear: true,
+        yearSuffix: '년',
+        changeYear: true,
+        changeMonth: true,
+        yearRange: 'c-100:c+10'
+
+    });
+
+    $(function() {
+        $("#datePicker1").datepicker();
+
+    });
+
+
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+                var detail = '';
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detail").focus();
+                document.getElementById("detail").value = detail;
+
+
+            }
+        }).open();
+    }
+</script>
+
+
+
+
+</body>
+</html>

@@ -6,4 +6,9 @@
         select * from user
     </select>
 
+    <insert id="insertUser" parameterType="com.example.springprj.domain.User">
+        insert into user(user_no, user_id, user_pw, user_name, user_serialNo, user_regDate, user_birth, user_phone, user_addr)
+            values(#{user_no}, #{user_id}, #{user_pw}, #{user_name}, #{user_serialNo}, now(), #{user_birth}, #{user_phone}, #{user_addr})
+    </insert>
+
 </mapper>
