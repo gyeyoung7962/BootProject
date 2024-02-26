@@ -11,4 +11,6 @@ public interface UserService {
 
     public void insertUser(User user);
     public List<User> userList();
+    public User login(String user_id, String user_pw);
+    public int id_chk(String user_id);
 }

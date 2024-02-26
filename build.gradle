@@ -34,9 +34,21 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    //---------------------------
 
-
+    //마이바티스
     implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '3.0.3'
+
+    //타임리프 레이아웃
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    //암호화
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    //암호화 크립토
+//    implementation 'org.springframework.security:spring-security-crypto'
+
+
 
 }
 

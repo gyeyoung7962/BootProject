@@ -29,4 +29,19 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.userList();
     }
+
+    @Override
+    public User login(String user_id, String user_pw) {
+
+
+        return userMapper.login(user_id, user_pw);
+    }
+
+    @Override
+    public int id_chk(String user_id) {
+
+        int id_chk_result = userMapper.id_chk(user_id);
+
+        return id_chk_result;
+    }
 }

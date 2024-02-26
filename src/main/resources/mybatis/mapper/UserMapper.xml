@@ -11,4 +11,12 @@
             values(#{user_no}, #{user_id}, #{user_pw}, #{user_name}, #{user_serialNo}, now(), #{user_birth}, #{user_phone}, #{user_addr})
     </insert>
 
+    <select id="login" parameterType="String" resultType="com.example.springprj.domain.User">
+        select * from user where user_id = #{user_id} and user_pw = #{user_pw}
+    </select>
+
+    <select id="id_chk" parameterType="com.example.springprj.domain.User" resultType="int">
+        select count(*) from user where user_id = #{user_id}
+    </select>
+
 </mapper>

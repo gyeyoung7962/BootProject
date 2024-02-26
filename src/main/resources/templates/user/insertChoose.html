@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입-선택</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/jquery.js}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" th:href="@{/css/insert.css}">
+</head>
+<body>
+
+<div class="container" id="insert_choose_box">
+    <h4 style="text-align: center; padding: 20px;">회원구분</h4>
+    <hr/>
+    <div>
+        <ul>
+            <li style="background:slateblue;"><a th:href="@{/user/insert}">환자</a></li>
+            <li style="background: rosybrown;"><a href="doctor_insert.html">의사</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

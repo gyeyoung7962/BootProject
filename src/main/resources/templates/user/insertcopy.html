@@ -1,14 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-                layout:decorate="~{layout/layout}">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입-환자등록</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/jquery.js}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" th:href="@{/css/insert.css}">
+</head>
 <body>
+<header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid row">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <a class="navbar-brand" href="/user/insert">병원매칭예약시스템</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                <div class="col-md-2"></div>
+
+                <div class="col-md-4">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">예약</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">게시판</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">병원목록</a>
+                        </li>
+                    </ul>
+                </div>
 
 
-<div layout:fragment="content"  class="container col-md-6" id="insert_box_patient">
+                <div class="col-md-2"></div>
+                <div class="collapse navbar-collapse d-flex" id="navbarCollapse">
+                    <ul class="navbar-nav col-md-1 me-auto mb-2 mb-md-0 justify-content-center">
+                        <li><a th:href="@{/user/choose}" class="navbar-brand">회원가입</a></li>
+                        <li><a th:href="@{/user/login}" class="navbar-brand">로그인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container col-md-6" id="insert_box_patient">
     <div class="input-form-backgroud row ">
-        <div class="input-form col-md-9 mx-auto">
+        <div class="input-form col-md-8 mx-auto">
             <h4 class="mb-3">환자등록</h4>
             <hr/>
             <form class="validation-form" action="/user/insert" method="post" novalidate>
@@ -17,8 +66,8 @@
                         <label for="user_name">이름</label>
                         <input type="text" class="form-control" name="user_name" id="user_name" placeholder="" value=""
                                required>
-                        <div class="name_msg">
-
+                        <div class="invalid-feedback">
+                            이름을 입력해주세요.
                         </div>
                     </div>
 
@@ -36,36 +85,32 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="user_id">아이디</label>
-                        <input type="text" class="form-control" name="user_id" id="user_id" placeholder="" value=""
-                                onblur="Validation()" required>
+                        <input type="text" class="form-control" name="user_id" id="user_id" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            아이디를 입력해주세요.
+                        </div>
                     </div>
-
-                    <div class="col-md-3 mb-3 align-self-end">
-                        <input type="button" onclick="duple()" class="form-control" id="user_duple" value="중복체크">
-                    </div>
-
-                    <div class="col-md-3 mb-3 align-self-end">
-                        <div class="id_msg"></div>
-                        <div class="valid-feedback idchk_msg"></div>
+                    <div class="col-md-6 mb-3">
+                        <input type="button" onclick="duple()" value="중복체크">
                     </div>
                 </div>
 
 
                 <div class="row">
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label for="user_pw">비밀번호</label>
-                        <input type="password" class="form-control" name="user_pw" id="user_pw" placeholder="" value="" required>
+                        <input type="password" class="form-control" name="user_pw" id="user_pw" placeholder="" value=""
+                               required>
+                        <div class="invalid-feedback">
+                            비밀번호 입력해주세요
+                        </div>
                     </div>
 
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label for="user_pwChk">비밀번호 확인</label>
-                        <input type="password" class="form-control" id="user_pwChk" placeholder="" value="" onkeyup="pw_chk()" required>
-                    </div>
-
-                    <div class="col-md-2 mb-3">
-                        <div class="pw_msg"></div>
-                        <div class="pw_msg1">
-
+                        <input type="password" class="form-control" id="user_pwChk" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            비밀번호가 다릅니다
                         </div>
                     </div>
 
@@ -119,7 +164,7 @@
         </div>
     </div>
 
-
+</div>
 
 
 <script>
@@ -166,126 +211,25 @@
                     addr = data.jibunAddress;
                 }
 
+
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('postcode').value = data.zonecode;
                 document.getElementById("address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("detail").focus();
                 document.getElementById("detail").value = detail;
+
+
             }
         }).open();
     }
 
-
-
-
-    //아이디 중복체크
     function duple(){
 
-        let input_user_id = $("#user_id").val();
-        if(input_user_id.length == 0){
-            $(".idchk_msg").html("아이디를 입력하세요").addClass("text-primary").show();
-        }
-        $.ajax({
-            type : "get",
-            url: "/user/id_Chk",
-            data : {
-                user_id : input_user_id
-            },
-            success: function(data){
-
-                if(data == 0){
-                    result ="사용가능합니다";
-                    $(".idchk_msg").html(result).addClass("text-primary").show();
-
-                }
-                else if(data == 1){
-                    result="사용할수없는 아이디입니다";
-                    $(".idchk_msg").html(result).addClass("text-danger").show();
-
-                }
-            }
-        });
-    }
-
-    //비밀번호 확인
-    function pw_chk() {
-
-        let user_pw = $("#user_pw").val();
-        let user_pwChk = $("#user_pwChk").val();
-
-        if (user_pw == user_pwChk) {
-            $(".pw_msg1").html("비밀번호가 일치합니다").addClass("text-primary").show();
-            $(".pw_msg1").removeClass("text-danger");
-        } else if (user_pw != user_pwChk) {
-            $(".pw_msg1").html("비밀번호가 일치하지않습니다").addClass("text-danger").show();
-            $(".pw_msg1").removeClass("text-primary");
-        }
-    }
-
-
-
-
-    function Validation(){
-
-        let user_id = $("#user_id").val();
-        let user_pw = $("#user_pw").val();
-        let user_name = $("#user_name").val();
-
-        // id, pw
-        let regIdPw = /^[a-zA-Z0-9]{4,12}$/;
-        // 이름
-        let regName = /^[가-힣a-zA-Z]{2,15}$/;
-
-        if(regIdPw.test(user_id)){
-
-            $(".id_msg").html("조건에 맞는 입력입니다 중복체크하세요").addClass("text-danger").show();
-            $(".id_msg").removeClass("text-danger");
-
-        }
-        else if(!regIdPw.test(user_id)){
-            $(".id_msg").html("4~12자 영문 대소문자, 숫자만 입력하세요.").addClass("text-danger").show();
-            $(".id_msg").removeClass("text-primary");
-            return false;
-        }
-
-        if(regIdPw.test(user_pw)){
-
-            $(".pw_msg").html("조건에 맞는 입력입니다").addClass("text-danger").show();
-            $(".pw_msg").removeClass("text-danger");
-
-        }
-        else if(!regIdPw.test(user_pw)){
-            $(".pw_msg").html("4~12자 영문 대소문자, 숫자만 입력하세요.").addClass("text-danger").show();
-            $(".pw_msg").removeClass("text-primary");
-            return false;
-        }
-
-        if(regName.test(user_name)){
-
-            $(".name_msg").html("조건에 맞는 입력입니다").addClass("text-primary").show();
-            $(".name_msg").removeClass("text-danger");
-
-        }
-        else if(!regName.test(user_name)){
-            $(".name_msg").html("최소 2글자 이상, 한글과 영어만 입력하세요").addClass("text-danger").show();
-            $(".name_msg").removeClass("text-primary");
-            return false;
-        }
-
-
-
-
-
-
 
     }
-
-
-
-
 </script>
-</div>
+
 
 </body>
 </html>
