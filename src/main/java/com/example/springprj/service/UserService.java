@@ -13,4 +13,12 @@ public interface UserService {
     public List<User> userList();
     public User login(String user_id, String user_pw);
     public int id_chk(String user_id);
+    public User userInfo(int user_no);
+    public int userDelete(int user_no);
+
+    public void userModify(User user);
+
+
+
+
 }

@@ -13,6 +13,7 @@ java {
 
 
 configurations {
+
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -43,14 +44,23 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
     //암호화
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
 
-    //암호화 크립토
-//    implementation 'org.springframework.security:spring-security-crypto'
+    //암호화테스트
+//    testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '5.7.4'
+
+
+    implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+
+
+
+
+
 
 
 
 }
+
 
 tasks.named('test') {
     useJUnitPlatform()

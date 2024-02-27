@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
+
     public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
@@ -43,5 +44,24 @@ public class UserServiceImpl implements UserService {
         int id_chk_result = userMapper.id_chk(user_id);
 
         return id_chk_result;
+    }
+
+    @Override
+    public User userInfo(int user_no) {
+
+        return userMapper.userInfo(user_no);
+    }
+
+    @Override
+    public int userDelete(int user_no) {
+
+        return userMapper.userDelete(user_no);
+
+    }
+
+    @Override
+    public void userModify(User user) {
+
+        userMapper.userModify(user);
     }
 }

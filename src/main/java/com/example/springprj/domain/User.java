@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.Date;
 import java.util.Random;
 
+
 @Data
 public class User {
 
@@ -17,7 +18,7 @@ public class User {
     private int user_serialNo; //랜덤시리얼번호(차트번호에 사용할예정)
     private String user_birth; //생년월일
     private String user_phone; //연락처
-    private String user_addr; //회원연락처
+    private String user_addr; //회원주소
 
     Random random = new Random();
 
@@ -32,4 +33,7 @@ public class User {
         serialNo++;
         this.user_serialNo = serialNo;
     }
+
+
+
 }
