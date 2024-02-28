@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<script>
+
+</script>
+<body>
+
+<div layout:fragment="content" class="col-md-6" style="border:1px solid black;  position: absolute; top:50%; left:50%; transform:translate(-50%, -50%)" >
+    <p style="font-size: 1.2rem;">회원정보</p>
+    <hr/>
+
+    <form class="infoForm" action="/user/modify" method="get">
+        <input type="hidden" name="user_no" id="user_no" th:value="${user_no}"/>
+    <div class="row col-md-12 mx-auto">
+        <div class="col-md-3"></div>
+        <div class="col-md-2 mb-3">
+            <p>이름</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <input type="text" class="form-control" name="user_name" disabled th:value="${user.user_name}">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row col-md-12 mx-auto">
+        <div class="col-md-3"></div>
+        <div class="col-md-2 mb-3">
+            <p>생년월일</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <input type="text" class="form-control" name="user_birth" disabled th:value="${user.user_birth}">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row col-md-12 mx-auto">
+        <div class="col-md-3"></div>
+        <div class="col-md-2 mb-3">
+            <p>아이디</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <input type="text" class="form-control" name="user_id" disabled th:value="${user.user_id}">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+        <div class="row col-md-12 mx-auto">
+            <div class="col-md-3"></div>
+            <div class="col-md-2 mb-3">
+                <p>비밀번호</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <input type="password" class="form-control" name="user_pw" disabled th:value="${user.user_pw}">
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+
+    <div class="row col-md-12 mx-auto">
+        <div class="col-md-3"></div>
+        <div class="col-md-2 mb-3">
+            <p>주소</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <input type="text" class="form-control" name="user_addr" disabled th:value="${user.user_addr}">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row col-md-12 mx-auto">
+        <div class="col-md-3"></div>
+        <div class="col-md-2 mb-3">
+            <p>회원시리얼번호</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <input type="text" class="form-control" name="user_serialNo" disabled th:value="${user.user_serialNo}">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row col-md-12 mx-auto">
+        <div class="col-md-3"></div>
+        <div class="col-md-2 mb-3">
+            <p>가입일</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <input type="text" class="form-control" name="user_regDate" disabled th:value="${#dates.format(user.user_regDate, 'yyyy-MM-dd')}">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row col-md-12 mx-auto">
+        <div class="col-md-3"></div>
+        <div class="col-md-2 mb-3">
+            <p>연락처</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <input type="text" class="form-control" name="user_phone" disabled th:value="${user.user_phone}">
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="d-flex col-md-6 mx-auto mb-2 p-2">
+        <input type="submit" class="form-control text-primary p-2" value="수정">
+        <input type="button" class="form-control text-danger p-2" onclick="userDel();" value="탈퇴">
+    </div>
+    </form>
+
+    <script>
+        function userDel() {
+            let no = $("#user_no").val();
+            let infoForm = $(".infoForm");
+            infoForm.attr("method", "post");
+            infoForm.attr("action", "/user/delete?user_no="+no);
+            infoForm.submit();
+        }
+
+    </script>
+
+
+
+</div>
+
+
+
+
+
+
+
+</body>
+</html>
