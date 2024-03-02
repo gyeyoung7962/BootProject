@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<body>
+
+
+<div layout:fragment="content" class="container col-md-6" id="insert_box_patient">
+
+    <div class="input-form-background row">
+        <div class="input-form col-md-9 mx-auto">
+
+            <h4 class="mb-3">의사</h4>
+            <hr/>
+            <form class="validation-form" action="/doctor/insert" method="post" novalidate>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3" style="width:200px; height:200px; position: relative;">
+                        <img id="preview_img"
+                             style="width:100%; height:100%;">
+                        <label for="input_file" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%) ">사진</label>
+                        <input type="file" class="form-control mx-auto" name="doctor_pic" id="input_file" value=""
+                               required style="display: none;">
+                        <div class="name_msg">
+
+                        </div>
+                    </div>
+
+
+                        <div class="col-md-6 mb-3">
+                            <label for="doctor_name">이름</label>
+                            <input type="text" class="form-control" name="doctor_name" id="doctor_name" placeholder=""
+                                   value=""
+                                   required>
+                            <div class="name_msg">
+                            </div>
+
+                            <label for="datePicker1">생년월일</label>
+                            <input type="text" id="datePicker1" class="form-control datePicker" name="doctor_birth"
+                                   autocomplete="off"/>
+                            <div class="invalid-feedback">
+                                생년월일 입력해주세요.
+                            </div>
+                        </div>
+
+                </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="doctor_code">의사코드</label>
+                            <input type="text" class="form-control" name="doctor_code" id="doctor_code"
+                                   placeholder="코드는 아이디로 사용" value="" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="hospital_code">병원코드</label>
+                            <input type="text" class="form-control" name="hospital_code" id="hospital_code"
+                                   placeholder="소속없으면 작성x" value="" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="doctor_pw">비밀번호</label>
+                            <input type="password" class="form-control" name="doctor_pw" id="doctor_pw" placeholder=""
+                                   value="" required>
+                        </div>
+
+                        <div class="col-md-5 mb-3">
+                            <label for="doctor_pwChk">비밀번호 확인</label>
+                            <input type="password" class="form-control" id="doctor_pwChk" placeholder="" value=""
+                                   onkeyup="pw_chk()" required>
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <div class="pw_msg"></div>
+                            <div class="pw_msg1">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-12 mb-3">
+                            <label for="doctor_phone">연락처</label>
+                            <input type="text" class="form-control" name="doctor_phone" id="doctor_phone"
+                                   placeholder="01012345678">
+
+                            <div class="invalid-feedback">
+                                연락처 입력해주세요
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-12 mb-3">
+                            <label for="doctor_career">경력사항</label>
+                            <textarea class="form-control" placeholder="작성" id="doctor_career" name="doctor_career"
+                                      style="height: 100px"></textarea>
+                            <div class="invalid-feedback">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="mb-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="aggrement" required>
+                        <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
+                    </div>
+                    <div class="mb-3"></div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-success btn-lg btn-block" type="submit">확인</button>
+                        <button class="btn btn-danger btn-lg btn-block" type="reset">취소</button>
+                    </div>
+
+            </form>
+                </div>
+
+        </div>
+
+
+        <script>
+
+            //date picker
+            $.datepicker.setDefaults({
+                dateFormat: 'yy-mm-dd',
+                prevText: '이전 달',
+                nextText: '다음 달',
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+                showMonthAfterYear: true,
+                yearSuffix: '년',
+                changeYear: true,
+                changeMonth: true,
+                yearRange: 'c-100:c+10'
+
+            });
+
+            $(function () {
+                $("#datePicker1").datepicker();
+
+            });
+
+
+            function sample6_execDaumPostcode() {
+                new daum.Postcode({
+                    oncomplete: function (data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var addr = ''; // 주소 변수
+                        var extraAddr = ''; // 참고항목 변수
+                        var detail = '';
+
+                        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                            addr = data.roadAddress;
+                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                            addr = data.jibunAddress;
+                        }
+
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('postcode').value = data.zonecode;
+                        document.getElementById("address").value = addr;
+                        // 커서를 상세주소 필드로 이동한다.
+                        document.getElementById("detail").focus();
+                        document.getElementById("detail").value = detail;
+                    }
+                }).open();
+            }
+
+
+            //아이디 중복체크
+            function duple() {
+
+                let input_user_id = $("#user_id").val();
+                if (input_user_id.length == 0) {
+                    $(".idchk_msg").html("아이디를 입력하세요").addClass("text-primary").show();
+                }
+                $.ajax({
+                    type: "get",
+                    url: "/user/id_Chk",
+                    data: {
+                        user_id: input_user_id
+                    },
+                    success: function (data) {
+
+                        if (data == 0) {
+                            result = "사용가능합니다";
+                            $(".idchk_msg").html(result).addClass("text-primary").show();
+
+                        } else if (data == 1) {
+                            result = "사용할수없는 아이디입니다";
+                            $(".idchk_msg").html(result).addClass("text-danger").show();
+
+                        }
+                    }
+                });
+            }
+
+            //비밀번호 확인
+            function pw_chk() {
+
+                let doctor_pw = $("#doctor_pw").val();
+                let doctor_pwChk = $("#doctor_pwChk").val();
+
+                if (doctor_pw == doctor_pwChk) {
+                    $(".pw_msg1").html("비밀번호가 일치합니다").addClass("text-primary").show();
+                    $(".pw_msg1").removeClass("text-danger");
+                } else if (doctor_pw != doctor_pwChk) {
+                    $(".pw_msg1").html("비밀번호가 일치하지않습니다").addClass("text-danger").show();
+                    $(".pw_msg1").removeClass("text-primary");
+                }
+            }
+
+
+            function Validation() {
+
+                let user_id = $("#user_id").val();
+                let user_pw = $("#user_pw").val();
+                let user_name = $("#user_name").val();
+
+                // id, pw
+                let regIdPw = /^[a-zA-Z0-9]{4,12}$/;
+                // 이름
+                let regName = /^[가-힣a-zA-Z]{2,15}$/;
+
+                if (regIdPw.test(user_id)) {
+
+                    $(".id_msg").html("조건에 맞는 입력입니다 중복체크하세요").addClass("text-danger").show();
+                    $(".id_msg").removeClass("text-danger");
+
+                } else if (!regIdPw.test(user_id)) {
+                    $(".id_msg").html("4~12자 영문 대소문자, 숫자만 입력하세요.").addClass("text-danger").show();
+                    $(".id_msg").removeClass("text-primary");
+                    return false;
+                }
+
+                if (regIdPw.test(user_pw)) {
+
+                    $(".pw_msg").html("조건에 맞는 입력입니다").addClass("text-danger").show();
+                    $(".pw_msg").removeClass("text-danger");
+
+                } else if (!regIdPw.test(user_pw)) {
+                    $(".pw_msg").html("4~12자 영문 대소문자, 숫자만 입력하세요.").addClass("text-danger").show();
+                    $(".pw_msg").removeClass("text-primary");
+                    return false;
+                }
+
+                if (regName.test(user_name)) {
+
+                    $(".name_msg").html("조건에 맞는 입력입니다").addClass("text-primary").show();
+                    $(".name_msg").removeClass("text-danger");
+
+                } else if (!regName.test(user_name)) {
+                    $(".name_msg").html("최소 2글자 이상, 한글과 영어만 입력하세요").addClass("text-danger").show();
+                    $(".name_msg").removeClass("text-primary");
+                    return false;
+                }
+            }
+
+            let preview_img = $("#preview_img");
+            let input_file = $("#input_file");
+
+            input_file.on("change", function(e){
+
+                var file = e.target.files[0];
+                if(isImageFile(file)){
+
+                    var reader = new FileReader();
+                    reader.onload = function(e){
+                        preview_img.attr("src", e.target.result );
+                    }
+                    reader.readAsDataURL(file);
+                }else{
+                    alert("이미지파일만 첨부가능합니다;")
+                }
+            });
+
+            function isImageFile(file){
+
+                var ext = file.name.split(".").pop().toLowerCase();
+                return ($.inArray(ext, ["jpg", "jpeg", "gif", "png"]) === -1) ? false : true;
+            }
+
+
+        </script>
+    </div>
+
+</body>
+</html>
