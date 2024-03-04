@@ -4,14 +4,15 @@ import com.example.springprj.domain.Doctor;
 import com.example.springprj.repository.DoctorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
-
-
     private final DoctorMapper doctorMapper;
 
     public DoctorServiceImpl(DoctorMapper doctorMapper){
@@ -19,7 +20,30 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void insertDoctor(Doctor doctor) {
+    public void insertDoctor(Doctor doctor, MultipartFile file) throws Exception {
+        //프로젝트 담을 경로
+        String projectPath = System.getProperty("user.dir")+ "/src/main/resources/static/upload";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + file.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+
+//        if(saveFile.exists()) {
+//            saveFile.delete();
+//        }
+        file.transferTo(saveFile);
+
+        doctor.setFile_name(fileName);
+        doctor.setFile_path("/upload/" +fileName);
+
+        doctorMapper.insertDoctor(doctor);
+
+    }
+
+    @Override
+    public void insertDoctor(Doctor doctor){
 
         doctorMapper.insertDoctor(doctor);
     }

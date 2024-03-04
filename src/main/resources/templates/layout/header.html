@@ -8,17 +8,15 @@
       <div class="container-fluid row">
         <div class="col-md-1"></div>
         <div class="col-md-2">
-          <a class="navbar-brand" href="/">병원매칭예약시스템[[${session.user_no}]]</a>
+          <a class="navbar-brand" href="/">병원매칭예약시스템</a>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">7
+        <div class="collapse navbar-collapse" id="navbarCollapse">
 
-          <div class="col-md-2"></div>
-
-          <div class="col-md-4">
+          <div class="col-md-3">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">예약</a>
@@ -32,17 +30,24 @@
             </ul>
           </div>
 
+          <div class="col-md-5">
+          <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarCollapse">
+            <ul class="navbar-nav col-md-1 me-auto mb-2 mb-md-0 ">
 
-          <div class="col-md-2"></div>
-          <div class="collapse navbar-collapse d-flex" id="navbarCollapse">
-            <ul class="navbar-nav col-md-1 me-auto mb-2 mb-md-0 justify-content-center">
+                    <li><a th:href="@{/user/info(user_no=${session.user_no})}" class="navbar-brand" th:if="${session.user_name != null}" th:text="${session.user_name}"></a></li>
+                    <li><a th:href="@{/user/logout}" th:if="${session.user_name != null}" class="navbar-brand">로그아웃</a></li>
 
-              <li><a th:href="@{/user/choose}" class="navbar-brand" th:if="${session.user_name== null}">회원가입</a></li>
-              <li><a th:href="@{/user/info(user_no=${session.user_no})}" class="navbar-brand" th:if="${session.user_name != null}" th:text="${session.user_name}"></a></li>
-              <li><a th:href="@{/user/logout}" class="navbar-brand" th:if="${session.user_name != null}">로그아웃</a></li>
-              <li><a th:href="@{/user/login}" class="navbar-brand" th:if="${session.user_name == null}">로그인</a></li>
+                    <li><a th:href="@{/doctor/info(doctor_no=${session.doctor_no})}" class="navbar-brand" th:if="${session.doctor_name != null}" th:text="${session.doctor_name}"></a></li>
+                    <li><a th:href="@{/doctor/logout}" class="navbar-brand"   th:if="${session.doctor_name != null}">로그아웃</a></li>
+
+
+                    <li><a th:href="@{/user/choose}" th:if="${session.isEmpty()}" class="navbar-brand">회원가입</a></li>
+                    <li><a th:href="@{/user/login}"  th:if="${session.isEmpty()}" class="navbar-brand">환자 로그인</a></li>
+                    <li><a th:href="@{/doctor/login}" th:if="${session.isEmpty()}" class="navbar-brand">의사 로그인</a></li>
+
 
             </ul>
+          </div>
           </div>
         </div>
       </div>

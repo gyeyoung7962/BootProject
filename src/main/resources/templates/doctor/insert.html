@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
-
 <body>
 
 
@@ -13,15 +12,14 @@
 
             <h4 class="mb-3">의사</h4>
             <hr/>
-            <form class="validation-form" action="/doctor/insert" method="post" novalidate>
-
+            <form  action="/doctor/insert" method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-md-6 mb-3" style="width:200px; height:200px; position: relative;">
+                    <div class="col-md-6 mb-5" style="width:200px; height:200px; position: relative;">
                         <img id="preview_img"
                              style="width:100%; height:100%;">
                         <label for="input_file" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%) ">사진</label>
-                        <input type="file" class="form-control mx-auto" name="doctor_pic" id="input_file" value=""
-                               required style="display: none;">
+                        <input type="file" class="form-control mx-auto" name="file" id="input_file" value=""
+                               required style="display: none;" >
                         <div class="name_msg">
 
                         </div>
@@ -37,7 +35,7 @@
                             </div>
 
                             <label for="datePicker1">생년월일</label>
-                            <input type="text" id="datePicker1" class="form-control datePicker" name="doctor_birth"
+                            <input type="text" id="datePicker1" class="form-control datePicker doctor_birth" name="doctor_birth"
                                    autocomplete="off"/>
                             <div class="invalid-feedback">
                                 생년월일 입력해주세요.
@@ -274,23 +272,13 @@
             input_file.on("change", function(e){
 
                 var file = e.target.files[0];
-                if(isImageFile(file)){
 
                     var reader = new FileReader();
                     reader.onload = function(e){
                         preview_img.attr("src", e.target.result );
                     }
                     reader.readAsDataURL(file);
-                }else{
-                    alert("이미지파일만 첨부가능합니다;")
-                }
             });
-
-            function isImageFile(file){
-
-                var ext = file.name.split(".").pop().toLowerCase();
-                return ($.inArray(ext, ["jpg", "jpeg", "gif", "png"]) === -1) ? false : true;
-            }
 
 
         </script>
