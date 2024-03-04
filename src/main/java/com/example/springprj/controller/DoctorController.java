@@ -89,6 +89,17 @@ public class DoctorController {
         return "doctor/info";
     }
 
+    @GetMapping("/doctor/modify")
+    public String getModify(@RequestParam("doctor_no") int doctor_no, Model model ){
+
+        Doctor doctor = doctorService.doctorInfo(doctor_no);
+
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("doctor_no", doctor_no);
+
+        return "doctor/modify";
+    }
+
 
 
 

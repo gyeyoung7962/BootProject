@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<script>
+
+</script>
+<body>
+<div layout:fragment="content" class="col-md-6" style="border:1px solid black; border-radius: 20px;  position: absolute; top:50%; left:50%; transform:translate(-50%, -50%)" >
+
+    <div class="input-form-background row" style="padding:10px;">
+        <div class="input-form col-md-9 mx-auto">
+
+<!--            [[${doctor.file_path}]]-->
+            <h4 class="mb-3">의사</h4>
+            <hr/>
+            <form  action="/doctor/modify" method="get" enctype="multipart/form-data">
+                <input type="hidden" name="doctor_no" id="doctor_no" th:value="${doctor_no}">
+
+                <div class="row">
+                    <div class="col-md-6 mb-5" style="width:200px; height:200px; position: relative;">
+                        <img id="preview_img" th:src="@{|/upload/${doctor.file_name}|}" style="width:100%; height:100%; border-radius: 20px;">
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+                        <label for="doctor_name">이름</label>
+                        <input type="text" class="form-control" name="doctor_name" id="doctor_name" placeholder=""
+                               th:value="${doctor.doctor_name}"
+                               disabled>
+
+                        <label for="datePicker1">생년월일</label>
+                        <input type="text" id="datePicker1" class="form-control datePicker doctor_birth" name="doctor_birth" th:value="${doctor.doctor_birth}"
+                               autocomplete="off" disabled/>
+
+                            <label for="doctor_code">의사코드</label>
+                            <input type="text" class="form-control" name="doctor_code" id="doctor_code" th:value="${doctor.doctor_code}"
+                                   value="" disabled>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="hospital_code">병원코드</label>
+                        <input type="text" class="form-control" name="hospital_code" id="hospital_code" th:value="${doctor.hospital_code}"
+                                value="" disabled>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="doctor_phone">연락처</label>
+                        <input type="text" class="form-control" name="doctor_phone" id="doctor_phone" th:value="${doctor.doctor_phone}" disabled >
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="doctor_career">경력사항</label>
+                        <textarea class="form-control" placeholder="작성" id="doctor_career" name="doctor_career" th:value="${doctor.doctor_career}"
+                                  style="height: 200px;" disabled></textarea>
+                    </div>
+                </div>
+
+                <div class="row col-md-12">
+                    <div class="col-md-2 mb-3">
+                        <p>비밀번호</p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <input type="password" class="form-control" name="doctor_pw" disabled th:value="${doctor.doctor_pw}">
+                    </div>
+                </div>
+
+                <div class="d-flex col-md-6 mx-auto mb-2 p-2">
+                    <input type="submit" class="form-control text-primary p-2" value="수정">
+                    <input type="button" class="form-control text-danger p-2" onclick="doctorDel();" value="탈퇴">
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
