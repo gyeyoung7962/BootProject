@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -44,7 +45,7 @@ public class DoctorController {
 
         doctorService.insertDoctor(doctor, file);
 
-        return "redirect:/";
+        return "redirect:/doctor/list";
     }
 
 
@@ -141,6 +142,16 @@ public class DoctorController {
         return "redirect:/";
     }
 
+
+    @GetMapping("/doctor/list")
+    public String getDoctorList(Model model) {
+
+        List<Doctor> list = doctorService.doctorList();
+
+        model.addAttribute("list", list);
+
+        return "doctor/list";
+    }
 
 
 
