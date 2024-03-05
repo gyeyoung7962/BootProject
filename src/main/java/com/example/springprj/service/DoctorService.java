@@ -5,6 +5,7 @@ import com.example.springprj.domain.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DoctorService {
 
@@ -16,8 +17,13 @@ public interface DoctorService {
     public Doctor login(String doctor_code, String doctor_pw); //로그인
     public int id_chk(String doctor_code); //중복체크
     public Doctor doctorInfo(int doctor_no);//회원정보
-    public int doctorDelete(int doctor_no); //회원탈퇴
-    public void doctorModify(Doctor doctor); //회원 수정
+    public void doctorDelete(int doctor_no,Doctor doctor); //회원탈퇴
+
+    public void doctorDelete(int doctor_no); //회원탈퇴
+
+    public void doctorModify(Doctor doctor, MultipartFile file) throws Exception; //회원 수정
+
+    public void doctorModify(Doctor doctor) throws Exception;
 
 
 }

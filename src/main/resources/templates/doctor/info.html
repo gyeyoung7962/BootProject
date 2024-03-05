@@ -14,7 +14,7 @@
 <!--            [[${doctor.file_path}]]-->
             <h4 class="mb-3">의사</h4>
             <hr/>
-            <form  action="/doctor/modify" method="get" enctype="multipart/form-data">
+            <form id="info_form"  action="/doctor/modify" method="get" enctype="multipart/form-data">
                 <input type="hidden" name="doctor_no" id="doctor_no" th:value="${doctor_no}">
 
                 <div class="row">
@@ -80,6 +80,22 @@
 
         </div>
     </div>
+
+    <script>
+        function doctorDel(){
+
+            let doctor_no = $("#doctor_no").val();
+            let form = $("#info_form");
+
+            form.attr("action", "/doctor/delete?doctor_no="+doctor_no);
+            form.attr("method", "post");
+            form.submit();
+        }
+
+    </script>
+
+
+
 </div>
 </body>
 </html>
