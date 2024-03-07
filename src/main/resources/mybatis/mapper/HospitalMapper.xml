@@ -10,6 +10,10 @@
 
     </insert>
 
+    <select id="hospitalInfo" resultType="com.example.springprj.domain.Hospital">
+        select * from hospital
+    </select>
+
 
 
 
