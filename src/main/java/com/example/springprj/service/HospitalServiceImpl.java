@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.List;
 
 @Service
 public class HospitalServiceImpl implements HospitalService {
@@ -39,9 +40,15 @@ public class HospitalServiceImpl implements HospitalService {
         hospitalMapper.insertHospital(hospital);
     }
 
-    @Override
-    public Hospital hospitalInfo() {
+//    @Override
+//    public Hospital hospitalInfo() {
+//
+//        return hospitalMapper.hospitalInfo(int hospital_no);
+//    }
 
-        return hospitalMapper.hospitalInfo();
+    @Override
+    public List<Hospital> hospitalList() {
+
+        return hospitalMapper.hospitalList();
     }
 }
