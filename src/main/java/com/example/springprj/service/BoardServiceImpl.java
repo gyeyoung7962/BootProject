@@ -5,6 +5,8 @@ import com.example.springprj.repository.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -17,5 +19,11 @@ public class BoardServiceImpl implements BoardService{
     public void insertBoard(Board board) {
 
         boardMapper.insertBoard(board);
+    }
+
+    @Override
+    public List<Board> listBoard() {
+
+        return boardMapper.listBoard();
     }
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<body>
+<div layout:fragment="content" class="col-md-12"
+     style="  position: absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+
+    <div class="col-md-10 mx-auto">
+        <table class="table">
+            <thead class="table-primary">
+            <tr>
+                <th class="col-md-1" scope="col">No</th>
+                <th class="col-md-8" scope="col">글제목</th>
+                <th class="col-md-1" scope="col">작성자</th>
+                <th class="col-md-1" scope="col">작성일자</th>
+                <th class="col-md-1" scope="col">조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:block th:each="list : ${list}">
+                <td th:text="${list.board_no}"></td>
+                <td th:text="${list.board_title}"></td>
+                <td th:text="${list.board_writer}"></td>
+                <td th:text="${#dates.format(list.board_regDate, 'yy-MM-dd')}"></td>
+                <td th:text="${list.board_viewCnt}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+</body>
+</html>
