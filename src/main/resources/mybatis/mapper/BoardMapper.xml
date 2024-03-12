@@ -12,6 +12,14 @@
         select * from board
     </select>
 
+    <select id="readBoard" parameterType="int" resultType="com.example.springprj.domain.Board">
+        select * from board where board_no = #{board_no}
+    </select>
+
+    <update id="updateViewCnt" parameterType="com.example.springprj.domain.Board">
+        update board set board_viewCnt = board_viewCnt +1 where board_no = #{board_no}
+    </update>
+
 
 
 
