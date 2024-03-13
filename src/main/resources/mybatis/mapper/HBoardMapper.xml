@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springprj.repository.HBoardMapper">
+
+    <insert id="insertHBoard" parameterType="com.example.springprj.domain.HBoard">
+            insert into HBoard(h_board_no, h_board_writer, h_board_title, h_board_pw, h_board_content, h_board_viewCnt, hospital_no, h_board_regDate, hospital_code)
+                            values(#{h_board_no}, #{h_board_writer}, #{h_board_title}, #{h_board_pw}, #{h_board_content}, #{h_board_viewCnt}, #{hospital_no}, now(), #{hospital_code})
+    </insert>
+
+    <select id="listHBoard" parameterType="com.example.springprj.domain.HBoard">
+        select * from HBoard where hospital_code = #{hospital_code}
+    </select>
+
+    <select id="infoHBoard" parameterType="com.example.springprj.domain.HBoard">
+        select * from HBoard where hospital_code = #{hospital_code} and hospital_no = #{hospital_no}
+    </select>
+
+
+
+
+
+
+</mapper>

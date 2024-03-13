@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<body>
+
+
+<div layout:fragment="content"  class="container col-md-6" id="insert_box_patient">
+    <div class="input-form-background row ">
+        <div class="input-form col-md-9 mx-auto">
+            <h4 class="mb-3">[[${hospital_name}]] 게시글작성</h4>
+            <hr/>
+            <form class="validation-form" th:action="@{/hboard/insert}" method="post" novalidate>
+                <input type="hidden" name="hospital_code" th:value="${hospital_code}">
+                <input type="hidden" name="hospital_no" th:value="${hospital_no}">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>작성자</label>
+                        <input type="text" class="form-control" name="h_board_writer"   th:if="${session.user_name != null}" th:value="${session.user_name}" required>
+                        <input type="text" class="form-control" name="h_board_writer"   th:if="${session.doctor_name != null}" th:value="${session.doctor_name}" required>
+                        <input type="text" class="form-control" name="h_board_writer"   th:if="${session == null}" th:value="" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="h_board_title">제목</label>
+                        <input type="text" class="form-control" name="h_board_title" id="h_board_title" placeholder="" value=""
+                               required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label for="h_board_pw">비밀번호</label>
+                        <input type="password" class="form-control" name="h_board_pw" id="h_board_pw" placeholder="" value="" required>
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <label for="h_board_pwChk">비밀번호 확인</label>
+                        <input type="password" class="form-control" id="h_board_pwChk" placeholder="" value="" onkeyup="pw_chk()" required>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <div class="pw_msg"></div>
+                        <div class="pw_msg1">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="h_board_content">내용</label>
+                        <textarea class="form-control" name="h_board_content" id="h_board_content" placeholder="" value="" required></textarea>
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-success btn-lg btn-block m-3" type="submit">확인</button>
+                    <button class="btn btn-danger btn-lg btn-block m-3" type="reset">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+        //비밀번호 확인
+        function pw_chk() {
+
+            let h_board_pw = $("#h_board_pw").val();
+            let h_board_pwChk = $("#h_board_pwChk").val();
+
+            if (h_board_pw.equals(h_board_pwChk)) {
+                $(".pw_msg1").html("비밀번호가 일치합니다").addClass("text-primary").show();
+                $(".pw_msg1").removeClass("text-danger");
+                $(".btn_success").css("disabled", false);
+            } else if (h_board_pw.equals(h_board_pwChk)) {
+                $(".pw_msg1").html("비밀번호가 일치하지않습니다").addClass("text-danger").show();
+                $(".pw_msg1").removeClass("text-primary");
+                $(".btn-success").css("disabled", true);
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>
