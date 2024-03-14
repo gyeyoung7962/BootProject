@@ -1,6 +1,7 @@
 package com.example.springprj.service;
 
 import com.example.springprj.domain.Board;
+import com.example.springprj.domain.Criteria;
 import com.example.springprj.repository.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.List;
 
 
 @Service
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
 
     @Autowired
@@ -40,4 +41,30 @@ public class BoardServiceImpl implements BoardService{
 
         boardMapper.updateViewCnt(board_no);
     }
+
+    @Override
+    public List<Board> listPaging(int page) throws Exception {
+
+        if (page <= 0) {
+            page = 1;
+        }
+        page = (page - 1) * 10;
+
+        return boardMapper.listPaging(page);
+    }
+
+    @Override
+    public List<Board> listCriteria(Criteria criteria) throws Exception {
+
+        return boardMapper.listCriteria(criteria);
+
+
+    }
+
+    @Override
+    public int boardCount() {
+
+        return boardMapper.boardCount();
+    }
+
 }

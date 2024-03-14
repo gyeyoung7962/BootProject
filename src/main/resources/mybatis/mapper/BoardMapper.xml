@@ -20,6 +20,20 @@
         update board set board_viewCnt = board_viewCnt +1 where board_no = #{board_no}
     </update>
 
+    <select id="listPaging" parameterType="com.example.springprj.domain.Criteria" resultType="com.example.springprj.domain.Board">
+       <![CDATA[ select * from board where board_no > 0 order by board_no desc, board_regDate desc limit #{page}, 10 ]]>
+    </select>
+
+    <select id="listCriteria" parameterType="com.example.springprj.domain.PageMaker" resultType="com.example.springprj.domain.Board">
+      <![CDATA[
+        select * from board where board_no > 0 order by board_no desc, board_regDate desc limit #{pageStart}, #{perPageNum}
+        ]]>
+    </select>
+
+    <select id="boardCount">
+        select count(*) from Board
+    </select>
+
 
 
 

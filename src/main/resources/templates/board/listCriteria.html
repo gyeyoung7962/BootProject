@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<body>
+<div layout:fragment="content" class="col-md-12"
+     style="  position: absolute; top:50%; left:50%; transform:translate(-50%, -50%)">
+
+    <div class="col-md-10 mx-auto">
+        <table class="table">
+            <thead class="table-primary">
+            <tr>
+                <th class="col-md-1" scope="col">No</th>
+                <th class="col-md-8" scope="col">글제목</th>
+                <th class="col-md-1" scope="col">작성자</th>
+                <th class="col-md-1" scope="col">작성일자</th>
+                <th class="col-md-1" scope="col">조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:block th:each="list : ${list}" th:if="${list != null}">
+                <td th:text="${list.board_no}"></td>
+                <td><a style="text-decoration: none;" th:href="@{/board/read(board_no = ${list.board_no})}" th:text="${list.board_title}"></a></td>
+                <td th:text="${list.board_writer}"></td>
+                <td th:text="${#dates.format(list.board_regDate, 'yy-MM-dd')}"></td>
+                <td th:text="${list.board_viewCnt}"></td>
+            </tr>
+
+            <tr th:block th:if="${list == null}">
+            <td>게시글이 없습니다</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row col-md-12">
+            <div class="col-md-6">
+                <input type="text" id="board_text" class="form-control">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="form-control" id="searchBtn">검색</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <button type="button" th:onclick="write_move()" class="form-control">글쓰기</button>
+            </div>
+        </div>
+
+        <div class="row col-md-12 p-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+                    <th:block th:if="${pageMaker.prev}">
+                    <li class="page-item disabled">
+                        <a th:if="${pageMaker.prev}" th:href="@{/board/listPaging(page = ${pageMaker.startPage - 1})}">이전</a>
+                    </li>
+                    </th:block>
+
+                    <li class="page-item" th:each="page: ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
+                        <a class="page-item" th:text="${page}" th:href="@{/board/listPaging(page = ${page})}"></a>
+                    </li>
+
+                    <th:block th:if="${pageMaker.next && pageMaker.endPage > 0}">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{/board/listPaging(page = ${pageMaker.endPage +1})}">다음</a>
+                    </li>
+                    </th:block>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+    <script>
+        function write_move(){
+
+            window.location.href='/board/insert';
+        }
+
+    </script>
+
+
+</div>
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.example.springprj.repository;
 
 
 import com.example.springprj.domain.Board;
+import com.example.springprj.domain.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,9 @@ public interface BoardMapper {
     public List<Board> listBoard();
     public Board readBoard(int board_no);
     public void updateViewCnt(int board_no);
+
+    List<Board> listPaging(int page) throws Exception;
+    List<Board> listCriteria(Criteria criteria) throws Exception;
+
+    public int boardCount();
 }
