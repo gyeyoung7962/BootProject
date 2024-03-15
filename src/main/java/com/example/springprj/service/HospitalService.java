@@ -11,7 +11,7 @@ public interface HospitalService {
 
     public void insertHospital(Hospital hospital, MultipartFile file) throws Exception;
 
-//    public Hospital hospitalInfo(int hospital_no);
+    public Hospital hospitalInfo(int hospital_no);
     public List<Hospital> hospitalList();
 
 

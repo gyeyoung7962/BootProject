@@ -5,8 +5,8 @@
 
 
     <insert id ="insertHospital" parameterType="com.example.springprj.domain.Hospital">
-        insert into hospital(hospital_name, hospital_medical, hospital_address, hospital_tel, hosptital_code, file_name, file_path, hospital_chart, user_no, doctor_no, reservation_no, hospital_no, hospital_regDate)
-                    values(#{hospital_name}, #{hospital_medical}, #{hospital_address}, #{hospital_tel}, #{hospital_code}, #{file_name}, #{file_path}, #{hospital_chart}, #{user_no}, #{doctor_no}, #{reservation_no}, #{hospital_no}, now())
+        insert into hospital(hospital_no, hospital_name, hospital_medical, hospital_address, hospital_tel , file_name, file_path, hospital_chart, user_no, doctor_no, reservation_no, hospital_regDate, hospital_code)
+                    values(hospital_no, #{hospital_name}, #{hospital_medical}, #{hospital_address}, #{hospital_tel}, #{file_name}, #{file_path}, #{hospital_chart}, #{user_no}, #{doctor_no}, #{reservation_no}, now(), #{hospital_code})
 
     </insert>
 

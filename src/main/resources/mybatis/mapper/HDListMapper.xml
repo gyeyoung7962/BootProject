@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springprj.repository.HDListMapper">
+
+    <insert id="insertHDList" parameterType="com.example.springprj.domain.HDList">
+        insert into HDList(hospital_no, doctor_no, doctor_name, hospital_code, doctor_phone, doctor_birth, doctor_career, file_Path, doctor_regDate)
+                        values(#{hospital_no}, #{doctor_no}, #{doctor_name}, #{hospital_code}, #{doctor_phone}, #{doctor_birth}, #{doctor_career}, #{file_Path}, #{doctor_regDate})
+
+    </insert>
+
+    <select id="doctorList" parameterType="int">
+        select * from HDList where hospital_no = #{hospital_no}
+    </select>
+
+
+
+
+
+
+
+</mapper>

@@ -40,11 +40,11 @@ public class HospitalServiceImpl implements HospitalService {
         hospitalMapper.insertHospital(hospital);
     }
 
-//    @Override
-//    public Hospital hospitalInfo() {
-//
-//        return hospitalMapper.hospitalInfo(int hospital_no);
-//    }
+    @Override
+    public Hospital hospitalInfo(int hospital_no) {
+
+        return hospitalMapper.hospitalInfo(hospital_no);
+    }
 
     @Override
     public List<Hospital> hospitalList() {
