@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content" class="container col-md-8 col-sm-12 mx-auto" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%)">
+
+
+    <!-- modal -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">일정 추가하기</h5>
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body form-control">
+                    일정이름  <input type="text" class="form-control" id="title" /><br />
+                    시작시간  <input type="datetime-local" class="form-control" id="start" /><br />
+                    종료시간  <input type="datetime-local" class="form-control" id="end" /><br />
+                    배경색상
+                    <select class="form-control" id="color">
+                        <option value="red">빨강색</option>
+                        <option value="orange">주황색</option>
+                        <option value="yellow">노랑색</option>
+                        <option value="green">초록색</option>
+                        <option value="blue">파랑색</option>
+                        <option value="indigo">남색</option>
+                        <option value="purple">보라색</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                    >
+                        취소
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveChanges">
+                        추가
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal--->
+
+
+
+    <script>
+
+
+        <!--  모달창 back-drop 있으면 body에 붙이면 오류 안생김-->
+        $(document).ready(function() {
+            $('#exampleModal').on('show.bs.modal', function () {
+                var modal = $(this);
+                modal.appendTo('body');
+            });
+        });
+
+
+
+
+
+
+
+
+        let calendar;
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면 (기본 설정: 달)
+                locale: 'ko', // 한국어 설정
+                expandRows: true, // 화면에 맞게 높이 재설정
+                height: '500px', // calendar 높이 설정
+                slotMinTime: '10:00',
+                slotMaxTime: '20:00',
+                navLinks: true,
+                editable: true,
+                selectable: true,
+                droppable : true,
+                customButtons:{
+                    myCustomButton:{
+                        text : "일정추가",
+                        click: function(){
+                            $("#exampleModal").modal("show");
+                        }
+                    },
+                    mySaveButton:{
+                        text : "일정 저장"
+                    }
+                },
+                headerToolbar:{
+                    left:'prev,next today,myCustomButton, mySaveButton',
+                    center:'title',
+                    right:'dayGridMonth, timeGridWeek, timeGridDay, listWeek'
+                },
+                select : function(arg){
+
+                    var title = prompt('스케줄입력:');
+                    if(title){
+
+                        calendar.addEvent({
+                            title : title,
+                            start : arg.start,
+                            end : arg.end,
+                            allDay : arg.allDay
+                        })
+                    }
+                    calendar.unselect();
+                },
+
+                //db연동 예시
+                events: [
+                    {
+                        idx: 0, // extendedProps.idx 접근 가능
+                        title: '첫번째 일정',
+                        start: '2023-01-25',
+                        classNames: ['classAddtest'], // event 영역 class 추가
+                        backgroundColor: 'red',
+                        borderColor: 'red',
+                        textColor: 'black',
+                    },
+                    {
+                        title: '두번째 일정',
+                        start: '2023-01-25',
+                        end: '2023-01-28',
+                    },
+                    {
+                        title: '페이지 이동 이벤트 호출',
+                        url: 'https://naver.com',
+                        start: '2023-02-01',
+                    },
+                ], // 이벤트
+                eventClick: function (info) {
+                    alert('Event info : ' + JSON.stringify(info.event));
+
+                    // url 커스텀 이동
+                    info.jsEvent.preventDefault(); // 클릭이벤트 후처리 방지
+
+                    if (info.event.url) {
+                        window.open("https://fullcalendar.io/docs/eventClick");
+                    }
+                }, // 일정 이벤트 클릭 이벤트 callback
+            });
+            calendar.render();
+        });
+
+
+
+
+        $("#saveChanges").on("click", function(){
+
+            console.log("======");
+
+            var eventData = {
+
+                title : $("#title").val(),
+                start : $("#start").val(),
+                end : $("#end").val(),
+                color : $("select[name=color] option:selected").text()
+            }
+
+            calendar.addEvent(eventData);
+            $("#exampleModal").modal("hide");
+            $("#title").val("");
+            $("#start").val("");
+            $("#end").val("");
+            $("#color").val("");
+
+            calendar.unselect();
+        });
+    </script>
+
+
+    <div id='calendar-container'>
+        <div id='calendar'></div>
+
+
+    </div>
+
+</div>
+
+
+</html>
+

@@ -153,6 +153,16 @@ public class DoctorController {
         return "doctor/list";
     }
 
+    @GetMapping("/doctor/calendar")
+    public String getCalendar(){
 
-
+        return "doctor/calendar";
+    }
 }
+
+
+
+
+
+
+
