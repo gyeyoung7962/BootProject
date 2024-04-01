@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springprj.repository.CalendarMapper">
+
+
+    <insert id="insertCalendar" parameterType="com.example.springprj.domain.Calendar">
+
+        insert into calendar(no, title, start, end, color) values(#{no}, #{title}, #{start}, #{end}, #{color})
+
+    </insert>
+
+    <select id="calendarList" resultType="com.example.springprj.domain.Calendar">
+        select * from calendar
+    </select>
+
+
+
+
+
+
+</mapper>
