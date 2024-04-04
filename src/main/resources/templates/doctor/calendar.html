@@ -65,8 +65,10 @@
         });
 
         let calendar;
+        let events; //일정을 담을 전역
         document.addEventListener('DOMContentLoaded', function () {
 
+            //--------일정 조회----------------
             $.ajax({
                 type: "get",
                 url: "/calendar/list",
@@ -92,13 +94,14 @@
                     console.log("error?" + e);
                 }
             });
+            //-------------------------------------------
 
-            var events; //일정을 담을 전역
+
             var calendarEl = document.getElementById('calendar');
 
             calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면 (기본 설정: 달)
-                locale: 'ko', // 한국어 설정
+
                 expandRows: true, // 화면에 맞게 높이 재설정
                 height: '500px', // calendar 높이 설정
                 slotMinTime: '10:00',
@@ -115,8 +118,10 @@
                             $("#exampleModal").modal("show");
                         }
                     },
+
+                    //하나의 이벤트씩 저장가능
                     mySaveButton: {
-                        text: "한번에 일정 저장",
+                        text: "일정저장",
                         click: function () {
 
                             let allEvent = calendar.getEvents();
@@ -130,8 +135,10 @@
                                 obj.start = allEvent[i]._instance.range.start;
                                 obj.end = allEvent[i]._instance.range.end;
 
-                                events.push(obj);
+
                             }
+
+                            events.push(obj);
 
                             $(function saveData() {
 
@@ -151,7 +158,6 @@
                                     }
                                 });
                             });
-                            console.log(obj);
                         }
                     }
                 },
@@ -175,21 +181,6 @@
                         });
 
                         var eventData = calendar.getEvents()[0];
-
-                        console.log("eventData")
-                        $.ajax({
-
-                            url: "/calendar/insert",
-                            method: "post",
-                            data: JSON.stringify(eventData),
-                            contentType: "application/json",
-                            success: function () {
-                                console.log("일정등록완료");
-                            },
-                            error: function (e) {
-                                console.log("일정 등록 변경");
-                            }
-                        });
                     }
                     calendar.unselect();
                 },
@@ -219,6 +210,7 @@
                         window.open("https://fullcalendar.io/docs/eventClick");
                     }
                 }, // 일정 이벤트 클릭 이벤트 callback
+                locale: 'ko', // 한국어 설정
             });
             calendar.render();
         });
@@ -233,14 +225,11 @@
                 start: $("#start").val(),
                 end: $("#end").val(),
 
-                // title: $("#title").val(),
-                // start: $("#start").val(),
-                // end: $("#end").val(),
                 // color: $("select[name=color] option:selected").text()
             }
             calendar.addEvent(eventData);
 
-            // events.push(eventData);d
+            // events.push(eventData);
 
 
             console.log("eventData:" + eventData);
@@ -261,7 +250,6 @@
                     alert("일정등록 실패");
                 }
             });
-
 
             $("#exampleModal").modal("hide");
             $("#title").val("");
