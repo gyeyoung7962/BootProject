@@ -6,10 +6,11 @@ import com.example.springprj.service.CalendarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,8 +54,9 @@ public class CalendarController {
 
             calendarService.insertCalendar(calendar);
         }
-        return "redirect:/calendar/list";
+        return "doctor/calendar";
     }
+
 
     @GetMapping(value = "/calendar/list")
     @ResponseBody
@@ -65,10 +67,11 @@ public class CalendarController {
         for (Calendar calendar : calendarService.calendarList()) {
             Map<String, Object> event = new HashMap<>();
 
+            event.put("no", calendar.getNo());
             event.put("title", calendar.getTitle());
             event.put("start", calendar.getStart());
             event.put("end", calendar.getEnd());
-            System.out.println("event 값 :" + "제목:" + event.get("title") + "\t" + "시작일:" + event.get("start") + "\t" + "종료일:" + event.get("end"));
+            System.out.println("event 값 :" + "번호:" + event.get("no") + "\t" + "제목:" + event.get("title") + "\t" + "시작일:" + event.get("start") + "\t" + "종료일:" + event.get("end"));
 
             eventList.add(event);
         }

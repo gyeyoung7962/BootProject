@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
@@ -8,54 +8,34 @@
 
 
     <!-- modal -->
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">일정 추가하기</h5>
-                    <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body form-control">
                     일정이름 <input type="text" class="form-control" id="title"/><br/>
                     시작시간 <input type="datetime-local" class="form-control" id="start"/><br/>
                     종료시간 <input type="datetime-local" class="form-control" id="end"/><br/>
                     <!--                    배경색상-->
-                    <!--                    <select class="form-control" id="color">-->
-                    <!--                        <option value="red">빨강색</option>-->
-                    <!--                        <option value="orange">주황색</option>-->
-                    <!--                        <option value="yellow">노랑색</option>-->
-                    <!--                        <option value="green">초록색</option>-->
-                    <!--                        <option value="blue">파랑색</option>-->
-                    <!--                        <option value="indigo">남색</option>-->
-                    <!--                        <option value="purple">보라색</option>-->
-                    <!--                    </select>-->
+                    <select class="form-control" id="color">
+                        <option value="#F44336">빨강색</option>
+                        <option value="#4CAF50">초록색</option>
+                        <option value="#2196F3">파랑색</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
-                    <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                    >
-                        취소
-                    </button>
-                    <button type="button" class="btn btn-primary" id="saveChanges">
-                        추가
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="saveChanges">추가</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- modal--->
 
-
     <script>
-
         <!--  모달창 back-drop 있으면 body에 붙이면 오류 안생김-->
         $(document).ready(function () {
             $('#exampleModal').on('show.bs.modal', function () {
@@ -66,34 +46,13 @@
 
         let calendar;
         let events; //일정을 담을 전역
+        let calID //일정별로 가지고있는 고유 id 값
         document.addEventListener('DOMContentLoaded', function () {
 
             //--------일정 조회----------------
-            $.ajax({
-                type: "get",
-                url: "/calendar/list",
-                dataType: "json",
-                async: false,
-                contentType: "application/json",
-                success: function (resp) {
 
-                    events = [];
+            dataList();
 
-                    for (var i = 0; i < resp.length; i++) {
-                        var res = resp[i];
-                        var event = {
-                            title: res.title,
-                            start: res.start,
-                            end: res.end
-                        };
-                        events.push(event);
-                    }
-                    console.log(JSON.stringify(events));
-                },
-                error: function (e) {
-                    console.log("error?" + e);
-                }
-            });
             //-------------------------------------------
 
 
@@ -101,7 +60,6 @@
 
             calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면 (기본 설정: 달)
-
                 expandRows: true, // 화면에 맞게 높이 재설정
                 height: '500px', // calendar 높이 설정
                 slotMinTime: '10:00',
@@ -110,6 +68,7 @@
                 editable: true,
                 selectable: true,
                 droppable: true,
+                locale: 'ko', // 한국어 설정
                 events: events,
                 customButtons: {
                     myCustomButton: {
@@ -118,13 +77,15 @@
                             $("#exampleModal").modal("show");
                         }
                     },
-
+                    //------------------------------
                     //하나의 이벤트씩 저장가능
                     mySaveButton: {
                         text: "일정저장",
                         click: function () {
 
                             let allEvent = calendar.getEvents();
+
+                            console.log("allEvent" + JSON.stringify(allEvent));
 
                             var events = new Array();
                             for (var i = 0; i < allEvent.length; i++) {
@@ -134,14 +95,13 @@
                                 obj.title = allEvent[i]._def.title;
                                 obj.start = allEvent[i]._instance.range.start;
                                 obj.end = allEvent[i]._instance.range.end;
-
-
                             }
+
+                            console.log("====obj start ====" + obj.start);
 
                             events.push(obj);
 
                             $(function saveData() {
-
                                 $.ajax({
                                     url: "/calendar/insert",
                                     method: "post",
@@ -151,15 +111,34 @@
                                     success: function () {
 
                                         alert("일정등록 완료");
+                                        dataList();
+                                        location.reload();
                                     },
                                     error: function (e) {
                                         console.log("error?", e);
                                         alert("일정등록 실패");
                                     }
                                 });
+
                             });
+
                         }
-                    }
+
+
+                    },
+
+                    //--------------------------------------------
+                    //일정삭제
+                    myDeleteButton: {
+                        text: "일정삭제",
+                        click: function deleteLog(calID) {
+
+                            alert(calID);
+                        }
+                    },
+
+
+                    //-------------------------------------------
                 },
                 headerToolbar: {
                     left: 'prev,next today,myCustomButton, mySaveButton',
@@ -174,13 +153,14 @@
                         calendar.removeAllEvents();
 
                         calendar.addEvent({
+                            id: arg.id,
                             title: title,
                             start: arg.start,
                             end: arg.end,
                             allDay: arg.allDay
                         });
 
-                        var eventData = calendar.getEvents()[0];
+                        // var eventData = calendar.getEvents()[0];
                     }
                     calendar.unselect();
                 },
@@ -201,7 +181,15 @@
                 //     calendar.unselect();
                 // },
                 eventClick: function (info) {
+
+                    //클릭한 데이터의 정보를 alert
                     alert('Event info : ' + JSON.stringify(info.event));
+
+
+                    var eventId = info.event.id; // 전역으로 옮길지 지역으로 옮길지 검토해야함, 값이 나오면 전역으로 옮겨서 외부에서 ajax에서 id값으로 지우는 로직 해보기
+
+                    calID = calendar.getEventById(eventId);
+                    console.log("현재 보고있는 스케줄의 id :" + calID);
 
                     // url 커스텀 이동
                     info.jsEvent.preventDefault(); // 클릭이벤트 후처리 방지
@@ -210,30 +198,40 @@
                         window.open("https://fullcalendar.io/docs/eventClick");
                     }
                 }, // 일정 이벤트 클릭 이벤트 callback
-                locale: 'ko', // 한국어 설정
+
+
             });
             calendar.render();
+
         });
 
         $("#saveChanges").on("click", function () {
 
+
             calendar.removeAllEvents();
+
+            let startDate = new Date($("#start").val());
+            let endDate = new Date($("#end").val());
 
             var eventData = {
 
                 title: $("#title").val(),
-                start: $("#start").val(),
-                end: $("#end").val(),
+                start: startDate.toISOString(),
+                end: endDate.toISOString()
 
                 // color: $("select[name=color] option:selected").text()
             }
+
+            console.log("====start======" + eventData.start);
+            console.log("====end=======" + eventData.end);
+
+
             calendar.addEvent(eventData);
 
-            // events.push(eventData);
+            events.push(eventData);
 
-
-            console.log("eventData:" + eventData);
-            console.log("JSON.stringify(eventData) :" + JSON.stringify(eventData));
+            // console.log("eventData:" + eventData);
+            // console.log("JSON.stringify(eventData) :" + JSON.stringify(eventData));
 
             $.ajax({
                 url: "/calendar/insert",
@@ -259,9 +257,52 @@
 
             calendar.unselect();
         });
+
+        function dataList() {
+            $.ajax({
+                type: "get",
+                url: "/calendar/list",
+                dataType: "json",
+                async: false,
+                contentType: "application/json",
+                success: function (resp) {
+
+                    events = [];
+
+                    for (var i = 0; i < resp.length; i++) {
+                        var res = resp[i];
+                        var event = {
+                            id: res.no,
+                            title: res.title,
+                            start: res.start,
+                            end: res.end
+                        };
+                        events.push(event);
+                    }
+                    console.log(JSON.stringify(events));
+                },
+                error: function (e) {
+                    console.log("error?" + e);
+                }
+            });
+        }
     </script>
 
     <div id='calendar-container'>
+
+        <div class="alert alert-warning" role="alert">
+            <h4>사용안내</h4>
+            month영역에서 달력에 스케줄 추가할시 온종일 이벤트로 표시 시간설정이 필요없으신분들께서 사용해주세요<br/>
+            원하는 시간에 스케줄을 등록하고싶으면 week, day ,list 를 클릭하여 일정을 만들고 일정 저장버튼을 클릭<br/> 기간 및 시간은 드래그로 조정가능
+
+        </div>
+
+        <div class="alert alert-info" role="alert">
+            <h4>안내사항</h4>
+            일정추가버튼은 시간포맷오류로 수정중<br/>
+            수정 및 삭제 구현 예정<br/>
+            공용 일정기능에서 의사마다 일정사용할수있게 구현 예정
+        </div>
         <div id='calendar'></div>
     </div>
 </div>
